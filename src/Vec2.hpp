@@ -40,12 +40,12 @@ public:
 
     Vec2 operator / (const T val) const
     {
-        return Vec2(x / rhs.x, y / rhs.y);
+        return Vec2(x / val, y / val);
     }
 
     Vec2 operator * (const T val) const
     {
-        return Vec2(x * rhs.x, y * rhs.y);
+        return Vec2(x * val, y * val);
     }
 
     bool operator == (const Vec2& rhs) const
@@ -72,19 +72,19 @@ public:
 
     void operator *= (const T val)
     {
-        x *= rhs.x;
-        y *= rhs.y;
+        x *= val;
+        y *= val;
     }
 
     void operator /= (const T val)
     {
-        x /= rhs.x;
-        y /= rhs.y;
+        x /= val;
+        y /= val;
     }
 
     float dist(const Vec2& rhs) const
     {
-        return sqrt((x-rhs.x)**2 + (y-rhx.y)**2);
+        return sqrt(pow((x-rhs.x), 2) + pow((y-rhs.y), 2));
     }
 };
 
