@@ -14,8 +14,11 @@ class EntityManager
 
     void removeDeadEntities(EntityVec& vec)
     {
-        // TODO: remove all dead entities from the input vector
-        //       this is called by the update() function
+        const auto new_vec = std::remove_if(vec.begin(), vec.end(), 
+                                    [](const std::shared_ptr<Entity>& entity) {
+                                        return !(entity->isActive());
+                                    });
+        vec.erase(new_vec, vec.end());
     }
 
 public:
@@ -23,14 +26,15 @@ public:
 
     void update()
     {
-        // TODO: add entities from m_entitiesToAdd the the proper location(s)
-        //       - add them to the vector of all entities
-        //       - add them to the vector inside the map, with the tag as a key
+        for (auto& entity : m_entitiesToAdd)
+        {
+            m_entities.push_back(entity);
+            m_entityMap[entity->tag()].push_back(entity);
+        }
+        m_entitiesToAdd.clear();
 
-        // remove dead entities from the vector of all entities
         removeDeadEntities(m_entities);
-
-        // remove dead entities from each vector in the entity map
+        
         // C++20 way of iterating through [key,value] pairs in a map
         for (auto& [tag, entityVec] : m_entityMap)
         {
